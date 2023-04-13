@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container my-3">
+    <form method="post" action="{% url 'users:signup' %}">
+      {% csrf_token %}
+      {% include "form_errors.html" %}
+      <div class="mb-3">
+        <label for="username" class="mb-1">사용자 이름 (사용하실 닉네임을 적어주세요)
+        </label>
+        <input type="text" class="form-control border-dark bg-white" name="username" id="username" value="{{ form.username.value|default_if_none:'' }}">
+      </div>
+      <div class="mb-3">
+        <label for="password1" class="mb-1">비밀번호</label>
+        <input type="password" class="form-control border-dark bg-white" name="password1" id="password1" value="{{ form.password1.value|default_if_none:'' }}">
+      </div>
+      <div class="mb-3">
+        <label for="password2" class="mb-1">비밀번호 확인</label>
+        <input type="password" class="form-control border-dark bg-white" name="password2" id="password2" value="{{ form.password2.value|default_if_none:'' }}">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="mb-1">이메일</label>
+        <input type="text" class="form-control" name="email" id="email" value="{{ form.email.value|default_if_none:'' }}">
+      </div>
+      <button type="submit" class="btn btn-primary">가입하기</button>
+    </form>
+    <div class="text-center">이미 계정을 가지고 있다면 <a href="{% url 'users:login' %}">로그인</a></div>
+  </div>
+{% endblock %}

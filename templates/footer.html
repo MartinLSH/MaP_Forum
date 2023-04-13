@@ -1,0 +1,26 @@
+<footer class="footer mt-auto">
+  <div class="container-fluid bg-success text-center">
+    <button type="button" class="btn btn-danger border-dark my-2" data-bs-toggle="modal" data-bs-target="#personal">
+      개인정보 취급방침
+    </button>
+    <!-- 개인정보 취급방침 modal -->
+    <div class="modal" id="personal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">개인정보 취급방침</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-start">
+            {% include "personal.html" %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid bg-secondary text-white text-center">
+    <p class="mb-0">copyright by MaP Friends 2023, mnmn MnsS~!</p>
+    <p class="mb-0">made with bootstrap 5.3.0 alpha1 ver, django 4.1.5 ver.</p>
+    <p class="mb-0">Thanks to 박응용, the author of 점프 투 장고.</p>
+  </div>
+</footer>

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container my-3">
+    {% if messages %}
+    <div class="alert alert-danger my-3" role="alert">
+    {% for message in messages %}
+        <strong>{{ message.tags }}</strong>
+        <ul><li>{{ message.message }}</li></ul>
+    {% endfor %}
+    </div>
+    {% endif %}
+    <h4 class="my-3 border-bottom pb-2">{{ post.category.description }}</h4>
+    <h3 class="border-bottom py-2">{{ post.subject }}</h3>
+        <div>
+          <div class="badge bg-info  p-2 container text-dark">
+            <div class="row">
+              <div class="col-2 text-start">작성자 : {{ post.author.username }} {% if post.author.is_staff %} <span class="badge rounded-pill bg-danger">a</span> {% endif %} </div>
+              <div class="col-4">작성일시 : {{ post.create_date }}</div>
+               <div class="col-4"> {% if post.modify_date %} 최근 수정일시 : {{ post.modify_date }} {% endif %} </div>
+              <div class="col-2 text-end">조회수 : {{ post.view_cnt }}</div>
+            </div>
+          </div>
+        </div>
+    <div class="card my-3">
+      <div class="card-body">
+        <div class="card-text" style="white-space: pre-line;">{{ post.content|safe }}</div>
+        <div class="mb-2 mt-3">
+          <a href="javascript:void(0)" data-uri="{% url 'board:vote' post.id  %}"class="recommend btn btn-sm btn-secondary" {% if not user.is_authenticated %} disabled {% endif %}> 추천
+            <span class="badge rounded-pill bg-success">{{ post.voter.count }}</span>
+          </a>
+          {% if request.user == post.author %}
+            <a href="{% url 'board:modify' post.id  %}" class="btn btn-sm btn-secondary">수정</a>
+          {% endif %}
+          {% if request.user.is_staff or request.user == post.author %}
+            <a href="javascript:void(0)" class="delete btn btn-sm btn-danger" data-uri="{% url 'board:post_delete' post.id  %}">삭제</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <a href="{% url 'board:index' post.category %}" class="btn btn-success my-2">목록으로 돌아가기</a>
+    <h5 class="border-bottom border-dark py-2">{{post.comment_set.count}}개의 댓글이 있습니다.</h5>
+    {% for comment in post.comment_set.all %}
+      <div class="border-bottom row">
+        <div class="my-1" style="white-space: pre-line;"><strong>{{ comment.author.username }}</strong> {% if comment.author.is_staff %} <span class="badge rounded-pill bg-danger">a</span> {% endif %} {% if post.author == comment.author %} <span class="badge rounded-pill bg-warning text-dark"> 작성자 </span> {% endif %}  {% if request.user.is_staff or request.user == comment.author %} <a href="#" class="delete btn btn-sm btn-danger "data-uri="{% url 'board:comment_delete' comment.id  %}">삭제</a> {% endif %}</div>
+        <div class="my-1" style="white-space: pre-line;">{{ comment.content }}</div>
+        <div class="col-2 my-2 badge bg-info text-dark text-center">
+          {{ comment.create_date }}
+        </div>
+      </div>
+    {% endfor %}
+    <form action="{% url 'board:comment_create' post.id %}" method="post" class="my-3">
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+          {% for field in form %}
+            {% if field.errors %}
+              <div>
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      <div class="mb-3">
+        <label for="content" class="form-label">댓글내용</label>
+        <textarea {% if not user.is_authenticated %} disabled {% endif %} name="content" id="content" class="form-control bg-white" rows="10"></textarea>
+      </div>
+      <input type="submit" value="댓글등록" class="btn btn-primary">
+    </form>
+  </div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+const delete_elements = document.getElementsByClassName("delete");
+Array.from(delete_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = this.dataset.uri;
+        };
+    });
+});
+const recommend_elements = document.getElementsByClassName("recommend");
+Array.from(recommend_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        if(confirm("정말로 추천하시겠습니까?")) {
+            location.href = this.dataset.uri;
+        };
+    });
+});
+</script>
+{% endblock %}

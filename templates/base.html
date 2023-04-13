@@ -1,0 +1,58 @@
+{% load static %}
+<!doctype html>
+<html lang="ko" class="h-100">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <!-- board CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>MaP Forum</title>
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    {% include "navbar.html" %}
+    <!-- 기본 템플릿 안에 삽입될 내용 Start -->
+    <main class="flex-shrink-0">
+      <div class="container" id="underNav">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+    <!-- 기본 템플릿 안에 삽입될 내용 End -->
+    {% include "footer.html" %}
+    <!-- Bootstrap JS -->
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <!-- 다크모드 JS -->
+    <script type='text/javascript'>
+      // 다크모드 전환 스위치 작동
+      let btn_colorMode = document.getElementById('btnSwitch');
+      btn_colorMode.addEventListener('click', function () {
+        if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+          document
+            .documentElement
+            .setAttribute('data-bs-theme', 'light');
+        } else {
+          document
+            .documentElement
+            .setAttribute('data-bs-theme', 'dark');
+        }
+        let modeSave = document
+          .documentElement
+          .getAttribute('data-bs-theme');
+        localStorage.setItem('data-bs-theme', String(modeSave));
+      })
+      // 다크/라이트 모드 유지
+      window.onload = function () {
+        document
+          .documentElement
+          .setAttribute('data-bs-theme', localStorage.getItem('data-bs-theme'));
+      };
+    </script>
+    <!-- JS 삽입될 부분 -->
+    {% block script %}{% endblock %}
+  </body>
+
+</html>

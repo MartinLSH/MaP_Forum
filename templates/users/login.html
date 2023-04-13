@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container my-3">
+    <form method="post" action="{% url 'users:login' %}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">
+      {% include "form_errors.html" %}
+      <div class="mb-3">
+        <label for="username">사용자 이름</label>
+        <input type="text" class="form-control border-dark bg-white" name="username" id="username" value="{{ form.username.value|default_if_none:'' }}">
+      </div>
+      <div class="mb-3">
+        <label for="password">비밀번호</label>
+        <input type="password" class="form-control border-dark bg-white" name="password" id="password" value="{{ form.password.value|default_if_none:'' }}">
+      </div>
+      <button type="submit" class="btn btn-primary">로그인</button>
+    </form>
+    <div class="text-center">계정이 없으시다면 <a href="{% url 'users:signup' %}">회원가입</a></div>
+    <div class="text-center">
+      <a href="{% url 'users:password_reset' %}">비밀번호를 잊으셨나요?</a>
+    </div>
+  </div>
+{% endblock %}
