@@ -3,12 +3,8 @@
  * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
  */
 
-CKEDITOR.editorConfig = function (config) {
-  // Define changes to default configuration here. For example:
-  // config.language = 'fr';
-  // config.uiColor = '#AADC6E';
-  config.extraPlugins = "uploadfile,uploadimage";
-  config.filebrowserUploadUrl = "/media/upload/";
-  config.enterMode = CKEDITOR.ENTER_BR;
-  config.fillEmptyBlocks = false;
+CKEDITOR.editorConfig = function( config ) {
+	// Define changes to default configuration here. For example:
+	// config.language = 'fr';
+	// config.uiColor = '#AADC6E';
 };
