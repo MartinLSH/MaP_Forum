@@ -268,7 +268,7 @@ LOGGING = {
             'format': '[{server_time}] {message}',
             'style': '{',
         },
-                'standard': {
+        'standard': {
             'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
         },
     },
@@ -288,7 +288,7 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-                'file': {
+        'file': {
             'level': 'INFO',
             'filters': ['require_debug_false'],
             'class': 'logging.handlers.RotatingFileHandler',
