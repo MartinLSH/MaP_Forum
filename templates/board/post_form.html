@@ -30,7 +30,7 @@
       </div>
       {% if request.user.is_staff %}
         <div class="form-check mb-1 py-2">
-          <input class="form-check-input mb-2 bg-white" {% if form.notice.value %} checked {% endif %} type="checkbox" name="notice"/>
+          <input class="form-check-input mb-2" {% if form.notice.value %} checked {% endif %} type="checkbox" name="notice"/>
           공지글로 등록하기
           <br/>
         </div>
